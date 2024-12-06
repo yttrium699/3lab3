@@ -28,9 +28,13 @@ using WebApplication1.Domain.Entities;
             }
 
             public override async Task UpdateAsync(Guid id, User entity)
-            {
-                await this.ExecuteSqlAsync($"UPDATE cr_bd.users SET login='{entity.Login}', pass_hash='{entity.PassHash}' WHERE id='{id}'");
-            }
+          {
+          if (entity is null)
+          {
+          throw new ArgumentNullException(nameof(entity));
+          }
+          await this.ExecuteSqlAsync($"UPDATE cr_bd.users SET login='{entity.Login}', pass_hash='{entity.PassHash}' WHERE id='{id}'");
+          }
 
             protected override User GetEntityFromReader(NpgsqlDataReader reader)
             {
