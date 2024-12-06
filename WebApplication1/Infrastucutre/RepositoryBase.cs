@@ -25,6 +25,10 @@ namespace WebApplication1.Infrastucutre
 
         protected async Task<IEnumerable<T>> ExecuteSqlReaderAsync(string sql)
         {
+        if (sql is null)
+        {
+        throw new ArgumentNullException(nameof(sql));
+        }
             var results = new List<T>();
 
             using (var connection = new NpgsqlConnection(connectionString))
@@ -46,6 +50,10 @@ namespace WebApplication1.Infrastucutre
 
         protected async Task ExecuteSqlAsync(string sql)
         {
+            if (sql is null)
+            {
+               throw new ArgumentNullException(nameof(sql));
+           }
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 await connection.OpenAsync();
